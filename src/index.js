@@ -13,7 +13,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
   }
   get template() { return template(pluginHtml) }
 
-  /* 
+  /*
    * Helper to build the "thumbs" property for a sprite sheet.
    *
    * spriteSheetUrl- The url to the sprite sheet image
@@ -108,7 +108,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
               this._$backdropCarouselImgs.splice(index, 0, $img)
               // Add thumbnail to DOM
               if (this._$backdropCarouselImgs.length === 1) {
-                this._$carousel.append($img) 
+                this._$carousel.append($img)
               }
               else if (index === 0) {
                 this._$backdropCarouselImgs[1].before($img)
@@ -124,7 +124,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
             this._renderPlugin()
           }
       })
-    }) 
+    })
   }
 
   // provide a reference to the thumb object you provided to remove it
@@ -162,6 +162,8 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
   }
 
   _init() {
+    debugger;
+    console.log(this._thumbsLoaded);
     if (!this._thumbsLoaded) {
       // _init() will be called when the thumbs are loaded,
       // and whenever the media control rendered event is fired as just before this the dom elements get wiped in IE (https://github.com/tjenkinson/clappr-thumbnails-plugin/issues/5)
@@ -205,7 +207,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
   }
 
   _buildThumbsFromOptions() {
-    var thumbs = this._getOptions().thumbs
+    var thumbs = this._getOptions().thumbs || []
     var promises = thumbs.map((thumb) => {
       return this._addThumbFromSrc(thumb)
     })
@@ -296,7 +298,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
       // Keep reference to thumbnail
       this._$backdropCarouselImgs.push($img)
       // Add thumbnail to DOM
-      $carousel.append($img) 
+      $carousel.append($img)
     }
   }
 
@@ -345,7 +347,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     var xCoordInCarousel = (thumbIndex * thumbWidth) + xCoordInThumb
     // and finally the position of the carousel when the hover position is taken in to consideration
     var carouselXCoord = xCoordInCarousel - (hoverPosition*backdropWidth)
-    
+
     $carousel.css("left", -carouselXCoord)
 
     var maxOpacity = this._getOptions().backdropMaxOpacity || 0.6;
@@ -384,7 +386,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     var thumbIndex = this._getThumbIndexForTime(hoverTime)
     var thumb = this._thumbs[thumbIndex]
     var $spotlight = this._$spotlight
-    
+
     if (this._spotlightThumb !== thumb) {
       // update thumbnail
       $spotlight.empty()
@@ -396,7 +398,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     var thumbWidth = $spotlight.width()
 
     var spotlightXPos = (elWidth * hoverPosition) - (thumbWidth / 2)
-    
+
     // adjust so the entire thumbnail is always visible
     spotlightXPos = Math.max(Math.min(spotlightXPos, elWidth - thumbWidth), 0)
 
